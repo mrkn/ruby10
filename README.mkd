@@ -1,0 +1,15 @@
+# Ruby 1.0 for Mac OS X
+
+## The Current Status
+
+- Couldn't support x86_64.
+- Couldn't build C extension libraries.
+
+## How to build
+
+```
+$ CFLAGS='-g -O2 -arch i386' ./configure i386-darwin
+$ make
+$ ./ruby -v
+ruby - version 1.0-971225 (-)
+```
