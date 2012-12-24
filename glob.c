@@ -76,15 +76,7 @@
 # define bcopy(s, d, n) (memcpy ((d), (s), (n)))
 #endif
 
-#ifdef _AIX
-#pragma alloca
-#else
-#if defined(HAVE_ALLOCA_H) && !defined(__GNUC__)
 #include <alloca.h>
-#else
-char *alloca ();
-#endif
-#endif
 
 #include "fnmatch.h"
 
