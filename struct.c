@@ -155,12 +155,10 @@ make_struct(name, member)
     return nstr;
 }
 
-#include <varargs.h>
+#include <stdarg.h>
 
 VALUE
-struct_define(name, va_alist)
-    char *name;
-    va_dcl
+struct_define(char *name, ...)
 {
     va_list ar;
     VALUE nm, ary;
@@ -169,7 +167,7 @@ struct_define(name, va_alist)
     nm = str_new2(name);
     ary = ary_new();
 
-    va_start(ar);
+    va_start(ar, name);
     while (mem = va_arg(ar, char*)) {
 	ID slot = rb_intern(mem);
 	ary_push(ary, INT2FIX(slot));
@@ -225,9 +223,7 @@ struct_alloc(class, values)
 }
 
 VALUE
-struct_new(class, va_alist)
-    VALUE class;
-    va_dcl
+struct_new(VALUE class, ...)
 {
     VALUE val, mem;
     int size;
@@ -236,7 +232,7 @@ struct_new(class, va_alist)
     val = rb_iv_get(class, "__size__");
     size = FIX2INT(val); 
     mem = ary_new();
-    va_start(args);
+    va_start(args, class);
     while (size--) {
 	val = va_arg(args, VALUE);
 	ary_push(mem, val);

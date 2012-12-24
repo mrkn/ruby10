@@ -324,8 +324,8 @@ char *rb_class2name _((VALUE));
 int rb_method_boundp _((VALUE,ID,int));
 
 VALUE rb_eval_string _((char*));
-VALUE rb_funcall();
-int rb_scan_args();
+VALUE rb_funcall _((VALUE, ID, int, ...));
+int rb_scan_args _((int, VALUE*, char*, ...));
 
 VALUE rb_iv_get();
 VALUE rb_iv_set();
@@ -343,13 +343,13 @@ int rb_safe_level();
 void rb_set_safe_level _((int));
 
 #ifdef __GNUC__
+volatile void Raise _((VALUE, char*, ...));
+volatile void Fail _((char*, ...));
+volatile void Fatal _((char*, ...));
+volatile void Bug _((char*, ...));
+volatile void WrongType _((char*, ...));
+volatile void rb_sys_fail _((char*));
 typedef void voidfn ();
-volatile voidfn Raise;
-volatile voidfn Fail;
-volatile voidfn Fatal;
-volatile voidfn Bug;
-volatile voidfn WrongType;
-volatile voidfn rb_sys_fail;
 volatile voidfn rb_break;
 volatile voidfn rb_exit;
 volatile voidfn rb_fatal;
@@ -369,8 +369,8 @@ void rb_raise();
 void rb_notimplement();
 #endif
 
-void Error();
-void Warning();
+void Error _((char*, ...));
+void Warning _((char*, ...));
 
 #if defined(EXTLIB) && defined(USE_DLN_A_OUT)
 /* hook for external modules */
